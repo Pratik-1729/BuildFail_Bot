@@ -1,0 +1,47 @@
+- category: DependencyError
+  keywords: [ "ModuleNotFound", "ImportError", "No module named", "package not found", "missing dependency" ]
+  suggestion: "Install missing dependencies or update requirements.txt / package.json."
+
+- category: CompilationError
+  keywords: [ "syntax error", "compilation failed", "gcc: error:", "javac: error:", "build failed" ]
+  suggestion: "Fix syntax or compiler errors in source code."
+
+- category: TestFailure
+  keywords: [ "AssertionError", "FAIL", "expected", "test failed" ]
+  suggestion: "Review failing test cases and update test logic."
+
+- category: TimeoutError
+  keywords: [ "Timeout", "timed out", "connection timed out", "job took too long" ]
+  suggestion: "Increase timeout limits or verify network stability."
+
+- category: PermissionError
+  keywords: [ "Permission denied", "Access denied", "Unauthorized", "authentication failed" ]
+  suggestion: "Check file permissions, API tokens, or credentials."
+
+- category: MemoryError
+  keywords: [ "OutOfMemory", "MemoryError", "killed process", "heap space" ]
+  suggestion: "Increase memory limits or optimize code performance."
+
+- category: NetworkError
+  keywords: [ "Connection refused", "Network unreachable", "DNS failure", "proxy error" ]
+  suggestion: "Verify network connectivity or proxy configuration."
+
+- category: BuildConfigError
+  keywords: [ "Invalid configuration", "Unknown command", "file not found", "path not found" ]
+  suggestion: "Check CI/CD configuration or file paths."
+
+- category: VersionConflict
+  keywords: [ "Version mismatch", "requires", "found version", "incompatible dependency" ]
+  suggestion: "Align dependency versions across environments."
+
+- category: DockerError
+  keywords: [ "docker: command not found", "image not found", "buildx failed", "container exited with error" ]
+  suggestion: "Verify Docker installation, image tags, and permissions."
+
+- category: GitError
+  keywords: [ "fatal: not a git repository", "merge conflict", "could not resolve ref" ]
+  suggestion: "Resolve Git conflicts or ensure correct branch references."
+
+- category: UnknownError
+  keywords: []
+  suggestion: "Inspect build logs and configuration for potential issues."
