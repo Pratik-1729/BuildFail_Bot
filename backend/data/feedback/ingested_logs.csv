@@ -1,5 +1,3 @@
-timestamp,repo,run_id,status,label,confidence,failed_step,suggestion,clean_log_excerpt
-"2025-11-05T11:05:21.926507","Pratik-1729/CI-Handson-using-githubactions","19096767622","","unknown","0.8316025733947754","-","Verify file or credential permissions.",""
-"2025-11-05T11:05:47.754835","Pratik-1729/CI-Handson-using-githubactions","19096767622","failure","unknown","0.8316025733947754","-","Verify file or credential permissions.",""
-"2025-11-05T17:39:58.217912","Pratik-1729/CI-Handson-using-githubactions","19096767622","","success","0.40410858392715454","-","Build completed successfully. No issues detected.",""
-"2025-11-05T17:40:21.515899","Pratik-1729/CI-Handson-using-githubactions","19096767622","failure","success","0.40410858392715454","-","Check requirements.txt or install missing dependencies.",""
+version https://git-lfs.github.com/spec/v1
+oid sha256:bdb2eede659e35eb376687dfca44273737a702bd35792cbda016598606e477b6
+size 816

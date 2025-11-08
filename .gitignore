@@ -1,0 +1,17 @@
+.env
+frontend/dashboard/node_modules/
+logs/
+BuildFail_Bot/ml_models_v2/
+
+# ML Models V2 (separate robust model training)
+ml_models_v2/
+changes.md
+env_setup.md
+env_files_guide.md
+LOG_PATH_CONSOLIDATION.md
+PATH_CONSOLIDATION.md
+WEB_EXTENSION_GUIDE.md
+AUTOMATIC_DEPLOYMENT.md
+AUTOMATIC_LOG_FETCHING.md
+LOG_INGESTION_FLOW.md
+WEB_EXTENSION_ENHANCEMENT_PLAN.md

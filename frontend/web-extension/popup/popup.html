@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BuildFailBot</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="popup-container">
+      <h1>BuildFailBot</h1>
+      <p class="subtitle">AI-powered CI/CD Log Analyzer</p>
+
+      <textarea id="logInput" placeholder="Paste build logs here..."></textarea>
+
+      <div class="button-group">
+        <button id="fetchLogs">Auto-Fetch Logs 🔁</button>
+        <button id="analyzeBtn">Analyze Logs ⚡</button>
+      </div>
+
+      <div id="result" class="hidden result"></div>
+
+      <footer>© 2025 BuildFailBot</footer>
+    </div>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

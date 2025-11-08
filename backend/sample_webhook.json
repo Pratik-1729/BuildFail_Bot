@@ -1,7 +1,3 @@
-{
-  "timestamp": "2025-11-03T18:30:00Z",
-  "repo_owner": "Pratik-1729",
-  "repo_name": "test_repo_buildfail_bot",
-  "pr_number": 1,
-  "log_text": "Build failed due to missing dependency in setup.py"
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:8357be832a2a9b52b01fddc0193e1852332111f0929a9bd7062aedad54241376
+size 206

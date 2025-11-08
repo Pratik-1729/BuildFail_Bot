@@ -1,0 +1,38 @@
+# BuildFail Bot - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# -------------------------------
+# Core Web Framework
+# -------------------------------
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pydantic==2.8.2
+
+# -------------------------------
+# Machine Learning & NLP
+# -------------------------------
+transformers==4.44.2
+torch==2.3.1
+scikit-learn==1.5.1
+numpy==1.26.4
+pandas==2.2.3
+
+# -------------------------------
+# Utilities & Logging
+# -------------------------------
+requests==2.32.3
+python-dotenv==1.0.1
+tqdm==4.66.4
+joblib==1.4.2
+
+# -------------------------------
+# Development & Testing
+# -------------------------------
+httpx==0.27.0
+pytest==8.3.3
+
+# -------------------------------
+# Optional Dependencies
+# -------------------------------
+# PyYAML for RCA rules (if needed)
+# pyyaml==6.0.1

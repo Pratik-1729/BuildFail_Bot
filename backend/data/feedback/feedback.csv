@@ -1,25 +1,3 @@
-timestamp,label,confidence,log_excerpt,rating
-2025-11-03T21:15:09.290800,failed,0.85,ModuleNotFoundError: No module named numpy,4
-2025-11-03T21:18:15.077264,error,0.0,ModuleNotFoundError: No module named numpy,4
-2025-11-04T09:05:26.126810,unknown,0.8232642412185669,ModuleNotFoundError: No module named numpy,1
-2025-11-04T18:48:05.465998,failed,0.7302676439285278,"AWFDeaf
-afDGFD
-
-
-fEF",1
-2025-11-04T18:48:11.858954,failed,0.7302676439285278,"AWFDeaf
-afDGFD
-
-
-fEF",1
-2025-11-04T18:51:35.490723,failed,0.6113033890724182,srgstzfetewtge,2
-2025-11-04T19:04:54.485309,failed,0.7741899490356445,HKSDAUSAHJDFHALU8YUJKFBAUSIFHDFJALSGBCADJSMNAICJHDCHDBASDFHU,2
-2025-11-04T19:10:23.556170,success,0.9885092377662659,Build completed successfully,5
-2025-11-04T19:10:46.347110,failed,0.8232642412185669,ModuleNotFoundError: No module named numpy,4
-2025-11-04T20:45:01.363416,failed,0.6656045913696289,"""ModuleNotFoundError: No module named 'numpy'""",5
-2025-11-05T06:59:22.898350,failed,0.95,Build failed due to missing dependency 'numpy',5
-2025-11-05T09:17:09.842322,failed,0.9817290902137756,"Run pytest _test.py
-============================= test session starts ==============================
-platform linux -- Python 3.12.12, pytest-8.4.2, pluggy-1.6.0
-rootdir: /home/runner/work/CI-Handson-",5
-2025-11-05T17:37:14.283163,skipped,0.9725760221481323,"build run_unit_tests deploy task was skipped due to pipeline conditions branch_tgn user_psc,task was skipped due to pipeline conditions",4
+version https://git-lfs.github.com/spec/v1
+oid sha256:9f0c4be32c47641e74b0144dbff8210f03215e417b937b120acab51be5eebf72
+size 1507
