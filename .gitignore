@@ -1,10 +1,14 @@
 .env
 frontend/dashboard/node_modules/
 logs/
-BuildFail_Bot/ml_models_v2/
+
+# Models and Results (uploaded to Hugging Face Hub instead)
+models/
+results/
 
 # ML Models V2 (separate robust model training)
 ml_models_v2/
+BuildFail_Bot/ml_models_v2/
 changes.md
 env_setup.md
 env_files_guide.md

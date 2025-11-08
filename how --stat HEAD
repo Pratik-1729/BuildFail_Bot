@@ -1,0 +1,124 @@
+[33mcommit 568f836b3fcff36ec6ffc3fa5bdb7c2abeed8355[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: pratik1729 <gaikwadpratik1729@gmail.com>
+Date:   Sat Nov 8 22:45:05 2025 +0530
+
+    Initial commit with LFS-tracked files
+
+ .gitignore                                         |    17 [32m+[m
+ .vscode/settings.json                              |     3 [32m+[m
+ HOW_TO_RUN.md                                      |   329 [32m+[m
+ LICENSE                                            |     0
+ README.md                                          |   257 [32m+[m
+ __pycache__/test_args.cpython-310.pyc              |   Bin [31m0[m -> [32m305[m bytes
+ backend/data/feedback/feedback.csv                 |    28 [32m+[m[31m-[m
+ backend/data/feedback/ingested_logs.csv            |     8 [32m+[m[31m-[m
+ backend/data/retrain_history.json                  |   102 [32m+[m[31m-[m
+ backend/results/checkpoint-120/config.json         |    39 [32m+[m[31m-[m
+ backend/results/checkpoint-120/optimizer.pt        |   Bin [31m535737163[m -> [32m134[m bytes
+ backend/results/checkpoint-120/scheduler.pt        |   Bin [31m1465[m -> [32m129[m bytes
+ .../results/checkpoint-120/special_tokens_map.json |    10 [32m+[m[31m-[m
+ backend/results/checkpoint-120/tokenizer.json      | 30687 [32m+[m[31m------------------[m
+ .../results/checkpoint-120/tokenizer_config.json   |    59 [32m+[m[31m-[m
+ backend/results/checkpoint-120/trainer_state.json  |    75 [32m+[m[31m-[m
+ backend/results/checkpoint-40/config.json          |    39 [32m+[m[31m-[m
+ backend/results/checkpoint-40/optimizer.pt         |   Bin [31m535737163[m -> [32m134[m bytes
+ backend/results/checkpoint-40/scheduler.pt         |   Bin [31m1465[m -> [32m129[m bytes
+ .../results/checkpoint-40/special_tokens_map.json  |    10 [32m+[m[31m-[m
+ backend/results/checkpoint-40/tokenizer.json       | 30687 [32m+[m[31m------------------[m
+ .../results/checkpoint-40/tokenizer_config.json    |    59 [32m+[m[31m-[m
+ backend/results/checkpoint-40/trainer_state.json   |    45 [32m+[m[31m-[m
+ backend/results/checkpoint-80/config.json          |    39 [32m+[m[31m-[m
+ backend/results/checkpoint-80/optimizer.pt         |   Bin [31m535737163[m -> [32m134[m bytes
+ backend/results/checkpoint-80/scheduler.pt         |   Bin [31m1465[m -> [32m129[m bytes
+ .../results/checkpoint-80/special_tokens_map.json  |    10 [32m+[m[31m-[m
+ backend/results/checkpoint-80/tokenizer.json       | 30687 [32m+[m[31m------------------[m
+ .../results/checkpoint-80/tokenizer_config.json    |    59 [32m+[m[31m-[m
+ backend/results/checkpoint-80/trainer_state.json   |    60 [32m+[m[31m-[m
+ backend/sample_webhook.json                        |    10 [32m+[m[31m-[m
+ data/feedback/feedback.csv                         |     3 [32m+[m
+ data/feedback/ingested_logs.csv                    |     3 [32m+[m
+ data/model/tokenizer/special_tokens_map.json       |     3 [32m+[m
+ data/model/tokenizer/tokenizer.json                |     3 [32m+[m
+ data/model/tokenizer/tokenizer_config.json         |     3 [32m+[m
+ data/model/tokenizer/vocab.txt                     | 30522 [32m++++++++++++++++++[m
+ data/model_metrics.json                            |     3 [32m+[m
+ data/processed/cleaned_logs.csv                    |     3 [32m+[m
+ data/processed/processed_data.pt                   |     3 [32m+[m
+ data/processed/test_cleaned.csv                    |     3 [32m+[m
+ data/processed/train_cleaned.csv                   |     3 [32m+[m
+ data/raw/ci_cd_logs.csv                            |     3 [32m+[m
+ data/retrain_history.json                          |     3 [32m+[m
+ frontend/.gitignore                                |    24 [32m+[m
+ frontend/README.md                                 |    16 [32m+[m
+ frontend/dashboard/package-lock.json               | 19049 [32m+[m[31m-----------[m
+ frontend/dashboard/package.json                    |    51 [32m+[m[31m-[m
+ frontend/dashboard/public/manifest.json            |    28 [32m+[m[31m-[m
+ frontend/web-extension/background.js               |    96 [32m+[m
+ frontend/web-extension/content.js                  |   298 [32m+[m
+ frontend/web-extension/icons/icon16.png            |   Bin [31m0[m -> [32m487[m bytes
+ frontend/web-extension/icons/icon192.png           |   Bin [31m0[m -> [32m10924[m bytes
+ frontend/web-extension/icons/icon32.png            |   Bin [31m0[m -> [32m1178[m bytes
+ frontend/web-extension/manifest.json               |     3 [32m+[m
+ frontend/web-extension/popup/popup.css             |   186 [32m+[m
+ frontend/web-extension/popup/popup.html            |    28 [32m+[m
+ frontend/web-extension/popup/popup.js              |   251 [32m+[m
+ frontend/web-extension/utils/api.js                |    23 [32m+[m
+ frontend/web-extension/utils/config.js             |    16 [32m+[m
+ models/distilbert_best/config.json                 |     3 [32m+[m
+ models/distilbert_best/pytorch_model.bin           |   Bin [31m0[m -> [32m267860714[m bytes
+ models/distilbert_best/special_tokens_map.json     |     3 [32m+[m
+ models/distilbert_best/tokenizer.json              |     3 [32m+[m
+ models/distilbert_best/tokenizer_config.json       |     3 [32m+[m
+ models/distilbert_best/vocab.txt                   | 30522 [32m++++++++++++++++++[m
+ models/distilbert_retrained/config.json            |     3 [32m+[m
+ models/distilbert_retrained/model.safetensors      |   Bin [31m0[m -> [32m267838720[m bytes
+ models/distilbert_retrained/pytorch_model.bin      |   Bin [31m0[m -> [32m267860714[m bytes
+ .../distilbert_retrained/special_tokens_map.json   |     3 [32m+[m
+ models/distilbert_retrained/tokenizer.json         |     3 [32m+[m
+ models/distilbert_retrained/tokenizer_config.json  |     3 [32m+[m
+ models/distilbert_retrained/vocab.txt              | 30522 [32m++++++++++++++++++[m
+ models/distilbert_trained/config.json              |     3 [32m+[m
+ models/distilbert_trained/pytorch_model.bin        |   Bin [31m0[m -> [32m267860714[m bytes
+ models/distilbert_trained/special_tokens_map.json  |     3 [32m+[m
+ models/distilbert_trained/tokenizer.json           |     3 [32m+[m
+ models/distilbert_trained/tokenizer_config.json    |     3 [32m+[m
+ models/distilbert_trained/vocab.txt                | 30522 [32m++++++++++++++++++[m
+ requirements.txt                                   |    38 [32m+[m
+ results/checkpoint-120/config.json                 |     3 [32m+[m
+ results/checkpoint-120/model.safetensors           |   Bin [31m0[m -> [32m267838720[m bytes
+ results/checkpoint-120/optimizer.pt                |     3 [32m+[m
+ results/checkpoint-120/rng_state.pth               |   Bin [31m0[m -> [32m14455[m bytes
+ results/checkpoint-120/scheduler.pt                |     3 [32m+[m
+ results/checkpoint-120/special_tokens_map.json     |     3 [32m+[m
+ results/checkpoint-120/tokenizer.json              |     3 [32m+[m
+ results/checkpoint-120/tokenizer_config.json       |     3 [32m+[m
+ results/checkpoint-120/trainer_state.json          |     3 [32m+[m
+ results/checkpoint-120/training_args.bin           |   Bin [31m0[m -> [32m5777[m bytes
+ results/checkpoint-120/vocab.txt                   | 30522 [32m++++++++++++++++++[m
+ results/checkpoint-40/config.json                  |     3 [32m+[m
+ results/checkpoint-40/model.safetensors            |   Bin [31m0[m -> [32m267838720[m bytes
+ results/checkpoint-40/optimizer.pt                 |     3 [32m+[m
+ results/checkpoint-40/rng_state.pth                |   Bin [31m0[m -> [32m14455[m bytes
+ results/checkpoint-40/scheduler.pt                 |     3 [32m+[m
+ results/checkpoint-40/special_tokens_map.json      |     3 [32m+[m
+ results/checkpoint-40/tokenizer.json               |     3 [32m+[m
+ results/checkpoint-40/tokenizer_config.json        |     3 [32m+[m
+ results/checkpoint-40/trainer_state.json           |     3 [32m+[m
+ results/checkpoint-40/training_args.bin            |   Bin [31m0[m -> [32m5777[m bytes
+ results/checkpoint-40/vocab.txt                    | 30522 [32m++++++++++++++++++[m
+ results/checkpoint-80/config.json                  |     3 [32m+[m
+ results/checkpoint-80/model.safetensors            |   Bin [31m0[m -> [32m267838720[m bytes
+ results/checkpoint-80/optimizer.pt                 |     3 [32m+[m
+ results/checkpoint-80/rng_state.pth                |   Bin [31m0[m -> [32m14455[m bytes
+ results/checkpoint-80/scheduler.pt                 |     3 [32m+[m
+ results/checkpoint-80/special_tokens_map.json      |     3 [32m+[m
+ results/checkpoint-80/tokenizer.json               |     3 [32m+[m
+ results/checkpoint-80/tokenizer_config.json        |     3 [32m+[m
+ results/checkpoint-80/trainer_state.json           |     3 [32m+[m
+ results/checkpoint-80/training_args.bin            |   Bin [31m0[m -> [32m5777[m bytes
+ results/checkpoint-80/vocab.txt                    | 30522 [32m++++++++++++++++++[m
+ scripts/collect_logs.py                            |     0
+ scripts/deploy_backend.sh                          |     0
+ scripts/retrain_job.py                             |     0
+ test_args.py                                       |     8 [32m+[m
+ 117 files changed, 215448 insertions(+), 111775 deletions(-)

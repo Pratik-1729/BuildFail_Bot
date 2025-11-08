@@ -357,4 +357,4 @@ def train_model():
 # ---------------------------------------------------------------------
 if __name__ == "__main__":
     acc = train_model()
-    print(f"\n🎯 Final retraining accuracy: {acc:.4f}")
+    print(f"\n🎯 Final retraining accuracy: {acc['accuracy']:.4f}")
