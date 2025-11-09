@@ -106,7 +106,7 @@ export default function Dashboard() {
       clearInterval(interval);
       if (pollInterval) clearInterval(pollInterval);
     };
-  }, []);
+  }, [pollInterval]);
 
   // ----------------------------------------------------------------------
   // Basic Stats
