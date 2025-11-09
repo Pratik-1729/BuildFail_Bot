@@ -385,9 +385,9 @@ def predict_log_status(log_text: str):
     suggestion = suggestion_data.get("suggestion", "Inspect logs for potential issues.")
     fix_command = suggestion_data.get("fix_command")
     
-    logger.info(f"🔮 Prediction: {pred_label} ({conf.item():.2f}) — {suggestion}")
+    logger.info(f"Prediction: {pred_label} ({conf.item():.2f}) — {suggestion}")
     if fix_command:
-        logger.info(f"🔧 Fix command: {fix_command}")
+        logger.info(f"Fix command: {fix_command}")
 
     result = {
         "predicted_label": pred_label,

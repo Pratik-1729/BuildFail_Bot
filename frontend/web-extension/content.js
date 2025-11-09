@@ -1,9 +1,9 @@
 (() => {
-  console.log("🧩 BuildFailBot content script loaded.");
+  console.log("BuildFailBot content script loaded.");
 
   // Run only on GitHub Actions "runs" pages
   if (!window.location.href.includes("/actions/runs/")) {
-    console.log("⚠️ Not a GitHub Actions run page — skipping.");
+    console.log("Not a GitHub Actions run page — skipping.");
     return;
   }
 
@@ -103,7 +103,7 @@
           .join("\n");
         
         if (logs && logs.length >= 50) {
-          console.log(`✅ Found logs using selector: ${selector} (${logs.length} chars)`);
+          console.log(`Found logs using selector: ${selector} (${logs.length} chars)`);
           break;
         }
       }
@@ -122,7 +122,7 @@
     }
 
     if (!logs || logs.length < 50) {
-      console.warn("⚠️ No logs found. Available selectors:", logSelectors);
+      console.warn("No logs found. Available selectors:", logSelectors);
       return null;
     }
 
@@ -164,7 +164,7 @@
       // If we found error lines, use them; otherwise use all logs
       if (errorLines.length > 10) {
         logs = errorLines.join('\n');
-        console.log(`📜 Smart extraction: ${errorLines.length} error-focused lines`);
+        console.log(`Smart extraction: ${errorLines.length} error-focused lines`);
       }
     }
 
@@ -187,7 +187,7 @@
     
     if (currentStatus !== buildStatus) {
       buildStatus = currentStatus;
-      console.log(`🔍 Build status detected: ${buildStatus}`);
+      console.log(`Build status detected: ${buildStatus}`);
 
       // Notify background script of status change
       chrome.runtime.sendMessage({
@@ -198,7 +198,7 @@
 
       // Auto-analyze if build failed and auto-analysis is enabled
       if (currentStatus === 'failed' && autoAnalysisEnabled && lastAnalyzedStatus !== 'failed') {
-        console.log("🚨 Build failed! Auto-analyzing...");
+        console.log("Build failed! Auto-analyzing...");
         lastAnalyzedStatus = 'failed';
         
         waitForLogs(20, 500, true).then((logs) => {
@@ -237,7 +237,7 @@
   // Listen for popup messages
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (msg.action === "get_logs") {
-      console.log("📨 Message received from popup:", msg);
+      console.log("Message received from popup:", msg);
       const smartMode = msg.smart !== false;
       
       // Extract repo name from URL
@@ -249,7 +249,7 @@
       waitForLogs(15, 1000, smartMode)
         .then((logs) => {
           if (logs) {
-            console.log(`✅ Logs fetched (${logs.length} chars).`);
+            console.log(`Logs fetched (${logs.length} chars).`);
             sendResponse({ 
               logs, 
               status: buildStatus,
@@ -257,7 +257,7 @@
               run_id: runId
             });
           } else {
-            console.warn("❌ Could not find logs after waiting.");
+            console.warn("Could not find logs after waiting.");
             sendResponse({ 
               logs: null, 
               status: buildStatus,

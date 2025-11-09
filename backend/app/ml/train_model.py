@@ -60,7 +60,7 @@ def prepare_combined_dataset():
     
     # Load base dataset
     base_df = load_dataset()
-    print(f"📘 Loaded base dataset: {len(base_df)} rows")
+    print(f"Loaded base dataset: {len(base_df)} rows")
     
     # Load new ingested logs
     ingested_file = str(INGESTED_LOGS_FILE)
@@ -77,9 +77,9 @@ def prepare_combined_dataset():
                 })
                 # Remove empty logs
                 new_logs_df = new_logs_df[new_logs_df["clean_text"].str.strip() != ""]
-                print(f"📥 Loaded {len(new_logs_df)} new ingested logs")
+                print(f"Loaded {len(new_logs_df)} new ingested logs")
         except Exception as e:
-            print(f"⚠️ Could not load ingested logs: {e}")
+            print(f"Could not load ingested logs: {e}")
     
     # Combine datasets
     if new_logs_df is not None and not new_logs_df.empty:
@@ -93,10 +93,10 @@ def prepare_combined_dataset():
         combined_df = pd.concat([base_df, new_logs_df[["text", "label"]]], ignore_index=True)
         # Remove duplicates
         combined_df = combined_df.drop_duplicates(subset=["text"], keep="last")
-        print(f"✅ Combined dataset: {len(combined_df)} rows ({len(base_df)} base + {len(new_logs_df)} new)")
+        print(f"Combined dataset: {len(combined_df)} rows ({len(base_df)} base + {len(new_logs_df)} new)")
     else:
         combined_df = base_df
-        print(f"✅ Using base dataset only: {len(combined_df)} rows")
+        print(f"Using base dataset only: {len(combined_df)} rows")
     
     return combined_df
 
@@ -108,7 +108,7 @@ def load_preprocessed():
     needs_reprocess = os.path.exists(ingested_file) and os.path.getsize(ingested_file) > 0
     
     if needs_reprocess or not os.path.exists(PROCESSED_FILE):
-        print("🔄 Preparing combined dataset with new logs...")
+        print("Preparing combined dataset with new logs...")
         combined_df = prepare_combined_dataset()
         
         # Encode labels
@@ -154,7 +154,7 @@ def load_preprocessed():
             "label2id": label2id,
             "id2label": id2label
         }, PROCESSED_FILE)
-        print(f"✅ Saved preprocessed data to {PROCESSED_FILE}")
+        print(f"Saved preprocessed data to {PROCESSED_FILE}")
     
     # Load preprocessed data
     data = torch.load(PROCESSED_FILE, map_location="cpu")
@@ -172,7 +172,7 @@ def load_preprocessed():
     label2id = data["label2id"]
     id2label = data["id2label"]
 
-    print(f"✅ Loaded preprocessed tensors: {len(train_dataset)} train, {len(val_dataset)} val")
+    print(f"Loaded preprocessed tensors: {len(train_dataset)} train, {len(val_dataset)} val")
     return train_dataset, val_dataset, label2id, id2label
 
 
@@ -198,10 +198,10 @@ def save_metrics(metrics):
 def train_model():
     train_dataset, val_dataset, label2id, id2label = load_preprocessed()
 
-    # ✅ Load tokenizer from consistent directory
+    # Load tokenizer from consistent directory
     tokenizer = DistilBertTokenizerFast.from_pretrained(str(TOKENIZER_DIR))
 
-    # ✅ Load the currently active model
+    # Load the currently active model
     model_path = get_active_model_path()
     print(f"🔄 Loading from active model: {model_path}")
 
@@ -212,22 +212,22 @@ def train_model():
                 model_path, num_labels=len(label2id),
                 id2label=id2label, label2id=label2id
             )
-            print(f"✅ Loaded existing model from {model_path}")
+            print(f"Loaded existing model from {model_path}")
         except Exception as e:
-            print(f"⚠️ Error loading model from {model_path}: {e}")
-            print("🆕 Falling back to base DistilBERT.")
+            print(f"Error loading model from {model_path}: {e}")
+            print("Falling back to base DistilBERT.")
             model = DistilBertForSequenceClassification.from_pretrained(
                 "distilbert-base-uncased", num_labels=len(label2id),
                 id2label=id2label, label2id=label2id
             )
     else:
-        print("🆕 No existing fine-tuned model found — using base DistilBERT.")
+        print("No existing fine-tuned model found — using base DistilBERT.")
         model = DistilBertForSequenceClassification.from_pretrained(
             "distilbert-base-uncased", num_labels=len(label2id),
             id2label=id2label, label2id=label2id
         )
 
-    # ✅ Device setup
+    # Device setup
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
 
@@ -245,7 +245,7 @@ def train_model():
     model.train()
     progress_bar = tqdm(range(num_training_steps))
     for epoch in range(EPOCHS):
-        print(f"\n🚀 Epoch {epoch + 1}/{EPOCHS}")
+        print(f"\nEpoch {epoch + 1}/{EPOCHS}")
         total_loss = 0
         for batch in train_loader:
             batch = {k: v.to(device) for k, v in batch.items()}
@@ -260,7 +260,7 @@ def train_model():
             progress_bar.update(1)
 
         avg_loss = total_loss / len(train_loader)
-        print(f"✅ Epoch {epoch + 1} complete. Avg Loss: {avg_loss:.4f}")
+        print(f"Epoch {epoch + 1} complete. Avg Loss: {avg_loss:.4f}")
 
     # ---------------- Validation ---------------- 
     model.eval()
@@ -285,7 +285,7 @@ def train_model():
         all_labels, all_preds, average="weighted", zero_division=0
     )
     
-    print(f"\n📊 Validation Metrics (Retrained):")
+    print(f"\nValidation Metrics (Retrained):")
     print(f"   Accuracy: {accuracy:.4f}")
     print(f"   Precision: {precision:.4f}")
     print(f"   Recall: {recall:.4f}")
@@ -305,7 +305,7 @@ def train_model():
     os.makedirs(RETRAINED_DIR, exist_ok=True)
     model.save_pretrained(RETRAINED_DIR, safe_serialization=False)
     tokenizer.save_pretrained(RETRAINED_DIR)
-    print(f"✅ Model saved to {RETRAINED_DIR}")
+    print(f"Model saved to {RETRAINED_DIR}")
 
     # Also save to DISTILBERT_TRAINED_DIR (used by inference)
     from app.config.settings import DISTILBERT_TRAINED_DIR
@@ -313,13 +313,13 @@ def train_model():
     os.makedirs(TRAINED_DIR, exist_ok=True)
     model.save_pretrained(TRAINED_DIR, safe_serialization=False)
     tokenizer.save_pretrained(TRAINED_DIR)
-    print(f"✅ Model saved to {TRAINED_DIR} (for inference)")
+    print(f"Model saved to {TRAINED_DIR} (for inference)")
 
     if is_first_training or accuracy > prev_best:
         if is_first_training:
-            print(f"🆕 First training - saving model as baseline.")
+            print(f"First training - saving model as baseline.")
         else:
-            print(f"🏆 New model is better! ({accuracy:.4f} > {prev_best:.4f})")
+            print(f"New model is better! ({accuracy:.4f} > {prev_best:.4f})")
         
         metrics["base_accuracy"] = accuracy
         metrics["active_model"] = "retrained"
@@ -334,14 +334,14 @@ def train_model():
                 shutil.rmtree(BEST_MODEL_DIR)
             shutil.copytree(tmpdir, BEST_MODEL_DIR)
 
-        print(f"✅ Best model updated at: {BEST_MODEL_DIR}")
+        print(f"Best model updated at: {BEST_MODEL_DIR}")
     else:
-        print(f"⚖️ Retained old best model. ({accuracy:.4f} <= {prev_best:.4f})")
+        print(f"Retained old best model. ({accuracy:.4f} <= {prev_best:.4f})")
         metrics["active_model"] = "retrained"  # Still use the newly trained model
 
     # Save metrics
     save_metrics(metrics)
-    print(f"📈 Metrics saved at {METRICS_FILE}")
+    print(f"Metrics saved at {METRICS_FILE}")
 
     # Return both accuracy and F1 score as a dict
     return {
@@ -357,4 +357,4 @@ def train_model():
 # ---------------------------------------------------------------------
 if __name__ == "__main__":
     acc = train_model()
-    print(f"\n🎯 Final retraining accuracy: {acc['accuracy']:.4f}")
+    print(f"\nFinal retraining accuracy: {acc['accuracy']:.4f}")

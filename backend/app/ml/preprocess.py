@@ -78,10 +78,10 @@ def clean_text(text: str) -> str:
 # ---------------------------------------------------------------------
 def load_dataset():
     if not os.path.exists(FINAL_DATA_FILE):
-        raise FileNotFoundError(f"❌ {FINAL_DATA_FILE} not found. Run dataset merge first.")
+        raise FileNotFoundError(f"{FINAL_DATA_FILE} not found. Run dataset merge first.")
 
     df = pd.read_csv(FINAL_DATA_FILE)
-    print(f"✅ Loaded dataset with {len(df)} rows and columns: {list(df.columns)}")
+    print(f"Loaded dataset with {len(df)} rows and columns: {list(df.columns)}")
 
     # Handle different column names
     if "clean_text" in df.columns and "error_segment" in df.columns:
@@ -131,11 +131,11 @@ def preprocess_and_save():
     # Load or initialize tokenizer
     if os.path.exists(TOKENIZER_PATH):
         tokenizer = DistilBertTokenizerFast.from_pretrained(TOKENIZER_PATH)
-        print("✅ Loaded existing tokenizer.")
+        print("Loaded existing tokenizer.")
     else:
         tokenizer = DistilBertTokenizerFast.from_pretrained("distilbert-base-uncased")
         tokenizer.save_pretrained(TOKENIZER_PATH)
-        print("📦 Saved new tokenizer.")
+        print("Saved new tokenizer.")
 
     encodings = tokenize_dataset(df, tokenizer)
 
@@ -160,7 +160,7 @@ def preprocess_and_save():
         "labels": labels_tensor[val_indices],
     }
 
-    # ✅ Save plain tensors & metadata — no class references
+    # Save plain tensors & metadata — no class references
     torch.save({
         "train_data": train_data,
         "val_data": val_data,
@@ -168,7 +168,7 @@ def preprocess_and_save():
         "id2label": id2label
     }, PROCESSED_OUTPUT)
 
-    print(f"✅ Preprocessing complete. Saved tensor data to {PROCESSED_OUTPUT}")
+    print(f"Preprocessing complete. Saved tensor data to {PROCESSED_OUTPUT}")
 
 # ---------------------------------------------------------------------
 if __name__ == "__main__":

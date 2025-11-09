@@ -34,9 +34,9 @@ def save_ingested(record: dict):
             escapechar="\\",
             encoding="utf-8",
         )
-        logger.info("✅ Log record saved successfully.")
+        logger.info("Log record saved successfully.")
     except Exception:
-        logger.exception("❌ Error saving ingested record")
+        logger.exception("Error saving ingested record")
 
 
 # ---------------------------------------------------------
@@ -117,26 +117,26 @@ def fetch_github_logs(payload):
         workflow = payload.get("workflow_run", {})
         logs_url = workflow.get("logs_url")
         if not logs_url:
-            logger.warning("⚠️ No logs_url in payload.")
+            logger.warning("No logs_url in payload.")
             return None
 
         token = GITHUB_TOKEN or os.getenv("GITHUB_TOKEN")
         if not token:
-            logger.warning("⚠️ Missing GITHUB_TOKEN.")
+            logger.warning("Missing GITHUB_TOKEN.")
             return None
 
         # Try raw text logs
         headers = {"Authorization": f"token {token}", "Accept": "text/plain"}
         resp = requests.get(logs_url, headers=headers, timeout=30)
         if resp.ok and len(resp.text.strip()) > 300:
-            logger.info("📄 Raw logs fetched successfully.")
+            logger.info("Raw logs fetched successfully.")
             return {"__combined__": clean_log_text(resp.text)}
 
         # Fallback to ZIP
-        logger.warning("⚠️ Raw logs unavailable — trying ZIP.")
+        logger.warning("Raw logs unavailable — trying ZIP.")
         resp = requests.get(logs_url, headers={"Authorization": f"token {token}"}, timeout=30)
         if not resp.ok:
-            logger.warning(f"⚠️ ZIP fetch failed ({resp.status_code}).")
+            logger.warning(f"ZIP fetch failed ({resp.status_code}).")
             return None
 
         logs, combined = {}, ""
@@ -150,10 +150,10 @@ def fetch_github_logs(payload):
                         if "build" in name.lower() or "error" in name.lower():
                             combined += "\n" + text
         logs["__combined__"] = combined or "\n".join(logs.values())
-        logger.info(f"📦 Extracted {len(logs)} logs from ZIP.")
+        logger.info(f"Extracted {len(logs)} logs from ZIP.")
         return logs
     except Exception:
-        logger.exception("❌ Error fetching logs")
+        logger.exception("Error fetching logs")
         return None
 
 
@@ -177,12 +177,12 @@ def process_build_log(payload: dict):
 
         logs = fetch_github_logs(payload)
         if not logs:
-            logger.warning("⚠️ No logs fetched — skipping.")
+            logger.warning("No logs fetched — skipping.")
             return
 
         log_text = logs.get("__combined__", "")
         if not log_text.strip():
-            logger.warning("⚠️ Empty log text — skipping.")
+            logger.warning("Empty log text — skipping.")
             return
 
         clean_text = clean_log_text(log_text)
@@ -220,7 +220,7 @@ def process_build_log(payload: dict):
         }
 
         save_ingested(record)
-        logger.info(f"✅ Processed log: {repo} | {label.upper()} | {suggestion}")
+        logger.info(f"Processed log: {repo} | {label.upper()} | {suggestion}")
         
         # Check if we should trigger automatic retraining (every 50 new logs)
         try:
@@ -234,7 +234,7 @@ def process_build_log(payload: dict):
             pass  # Don't fail if auto-retrain check fails
 
     except Exception:
-        logger.exception("❌ Unexpected error in process_build_log")
+        logger.exception("Unexpected error in process_build_log")
 
 
 @router.post("/manual")
@@ -319,9 +319,9 @@ async def manual_log_analysis(request: Request):
                     "clean_log_excerpt": meaningful_excerpt[:2000]
                 }
                 save_ingested(record)
-                logger.info(f"✅ Manual log saved: {repo} | {label.upper()} | {suggestion}")
+                logger.info(f"Manual log saved: {repo} | {label.upper()} | {suggestion}")
             except Exception as e:
-                logger.warning(f"⚠️ Could not save manual log: {e}")
+                logger.warning(f"Could not save manual log: {e}")
 
         response = {
             "predicted_label": label,
@@ -336,7 +336,7 @@ async def manual_log_analysis(request: Request):
         
         return response
     except Exception as e:
-        logger.exception("❌ Error analyzing log manually.")
+        logger.exception("Error analyzing log manually.")
         raise HTTPException(status_code=500, detail=str(e))
 # ---------------------------------------------------------
 # Webhook Endpoint

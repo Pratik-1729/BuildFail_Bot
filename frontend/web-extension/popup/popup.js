@@ -133,7 +133,7 @@ analyzeBtn.onclick = async () => {
     }, 100);
   } catch (err) {
     console.error(err);
-    showMessage("❌ Failed to analyze logs. Check if backend is running.", "error");
+    showMessage("Failed to analyze logs. Check if backend is running.", "error");
   }
 };
 
@@ -153,10 +153,10 @@ function renderResult(label, conf, suggestion, logText, fixCommand = null) {
   if (fixCommand) {
     fixCommandSection = `
       <div class="fix-command-section">
-        <p><strong>🔧 Quick Fix:</strong></p>
+        <p><strong>Quick Fix:</strong></p>
         <div class="fix-command-box">
           <code id="fixCommand">${fixCommand}</code>
-          <button id="copyFixBtn" class="copy-btn" title="Copy to clipboard">📋 Copy</button>
+          <button id="copyFixBtn" class="copy-btn" title="Copy to clipboard"> Copy</button>
         </div>
       </div>
     `;
@@ -201,12 +201,12 @@ function renderResult(label, conf, suggestion, logText, fixCommand = null) {
           copyBtn.textContent = '✓ Copied!';
           copyBtn.style.background = '#16a34a';
           setTimeout(() => {
-            copyBtn.textContent = '📋 Copy';
+            copyBtn.textContent = 'Copy';
             copyBtn.style.background = '';
           }, 2000);
         }).catch(err => {
           console.error('Failed to copy:', err);
-          showMessage('❌ Failed to copy command', 'error');
+          showMessage('Failed to copy command', 'error');
         });
       });
     }
@@ -233,15 +233,15 @@ async function submitFeedback(label, confidence, rating, logExcerpt) {
     });
     
     if (response.ok) {
-      showMessage("✅ Feedback submitted! Thank you!", "success");
+      showMessage("Feedback submitted! Thank you!", "success");
     } else {
       const errorText = await response.text();
       console.error("Feedback error response:", response.status, errorText);
-      showMessage(`⚠️ Failed to submit feedback (${response.status})`, "warning");
+      showMessage(`Failed to submit feedback (${response.status})`, "warning");
     }
   } catch (err) {
     console.error("Feedback error:", err);
-    showMessage("❌ Error submitting feedback", "error");
+    showMessage("Error submitting feedback", "error");
   }
 }
 

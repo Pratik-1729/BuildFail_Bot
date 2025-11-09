@@ -40,10 +40,10 @@ class GitHubActionsPoller:
             response = requests.get(url, headers=self.headers, params=params, timeout=30)
             response.raise_for_status()
             repos = response.json()
-            logger.info(f"✅ Found {len(repos)} repositories for {org_or_user}")
+            logger.info(f"Found {len(repos)} repositories for {org_or_user}")
             return repos
         except Exception as e:
-            logger.error(f"❌ Error fetching repositories: {e}")
+            logger.error(f"Error fetching repositories: {e}")
             return []
     
     def get_workflow_runs(self, owner: str, repo: str, since: Optional[datetime] = None) -> List[Dict]:
@@ -62,10 +62,10 @@ class GitHubActionsPoller:
             response.raise_for_status()
             data = response.json()
             runs = data.get("workflow_runs", [])
-            logger.info(f"✅ Found {len(runs)} workflow runs for {owner}/{repo}")
+            logger.info(f"Found {len(runs)} workflow runs for {owner}/{repo}")
             return runs
         except Exception as e:
-            logger.error(f"❌ Error fetching workflow runs for {owner}/{repo}: {e}")
+            logger.error(f"Error fetching workflow runs for {owner}/{repo}: {e}")
             return []
     
     def get_run_logs(self, owner: str, repo: str, run_id: int) -> Optional[str]:
@@ -89,7 +89,7 @@ class GitHubActionsPoller:
                 
                 return "\n".join(logs)
         except Exception as e:
-            logger.error(f"❌ Error fetching logs for run {run_id}: {e}")
+            logger.error(f"Error fetching logs for run {run_id}: {e}")
             return None
     
     def process_run(self, owner: str, repo: str, run: Dict):
@@ -109,12 +109,12 @@ class GitHubActionsPoller:
         if status != "completed":
             return
         
-        logger.info(f"📥 Processing run: {owner}/{repo} #{run_id} ({conclusion})")
+        logger.info(f"Processing run: {owner}/{repo} #{run_id} ({conclusion})")
         
         # Fetch logs
         logs = self.get_run_logs(owner, repo, run_id)
         if not logs or len(logs.strip()) < 50:
-            logger.warning(f"⚠️ No logs found for run {run_id}")
+            logger.warning(f"No logs found for run {run_id}")
             return
         
         # Create webhook-like payload
@@ -136,9 +136,9 @@ class GitHubActionsPoller:
         try:
             process_build_log(payload)
             self.processed_runs.add(run_key)
-            logger.info(f"✅ Processed run {run_id}")
+            logger.info(f"Processed run {run_id}")
         except Exception as e:
-            logger.error(f"❌ Error processing run {run_id}: {e}")
+            logger.error(f"Error processing run {run_id}: {e}")
     
     def poll_repositories(self, orgs_or_users: List[str], poll_interval: int = 300):
         """
@@ -148,8 +148,8 @@ class GitHubActionsPoller:
             orgs_or_users: List of GitHub orgs/users to monitor
             poll_interval: Seconds between polls (default: 5 minutes)
         """
-        logger.info(f"🔄 Starting polling service for: {orgs_or_users}")
-        logger.info(f"⏰ Poll interval: {poll_interval} seconds")
+        logger.info(f"Starting polling service for: {orgs_or_users}")
+        logger.info(f"Poll interval: {poll_interval} seconds")
         
         while True:
             try:
@@ -176,14 +176,14 @@ class GitHubActionsPoller:
                         self.last_poll_time[repo_key] = datetime.utcnow()
                 
                 # Wait before next poll
-                logger.info(f"⏳ Waiting {poll_interval} seconds before next poll...")
+                logger.info(f"Waiting {poll_interval} seconds before next poll...")
                 time.sleep(poll_interval)
                 
             except KeyboardInterrupt:
-                logger.info("🛑 Polling stopped by user")
+                logger.info("Polling stopped by user")
                 break
             except Exception as e:
-                logger.error(f"❌ Error in polling loop: {e}")
+                logger.error(f"Error in polling loop: {e}")
                 time.sleep(60)  # Wait 1 minute on error
 
 def start_polling_service(orgs_or_users: List[str], poll_interval: int = 300):

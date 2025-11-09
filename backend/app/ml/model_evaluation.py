@@ -14,7 +14,7 @@ def evaluate_model(trainer, val_dataset):
     Returns validation accuracy as float (0–1).
     """
     try:
-        logger.info("🔍 Evaluating model performance on validation set...")
+        logger.info("Evaluating model performance on validation set...")
         preds_output = trainer.predict(val_dataset)
 
         preds = np.argmax(preds_output.predictions, axis=1)
@@ -25,11 +25,11 @@ def evaluate_model(trainer, val_dataset):
             labels, preds, average="weighted", zero_division=0
         )
 
-        logger.info(f"📊 Metrics → Acc: {acc:.4f}, Prec: {precision:.4f}, Rec: {recall:.4f}, F1: {f1:.4f}")
+        logger.info(f"Metrics → Acc: {acc:.4f}, Prec: {precision:.4f}, Rec: {recall:.4f}, F1: {f1:.4f}")
         return round(acc, 4)
 
     except Exception as e:
-        logger.error(f"❌ Model evaluation failed: {e}")
+        logger.error(f"Model evaluation failed: {e}")
         return 0.0
 
 
@@ -59,5 +59,5 @@ def evaluate_standalone(model, tokenizer, dataset, device="cpu"):
             all_labels.append(batch["label_enc"])
 
     acc = accuracy_score(all_labels, all_preds)
-    logger.info(f"🧪 Standalone evaluation accuracy: {acc:.4f}")
+    logger.info(f"Standalone evaluation accuracy: {acc:.4f}")
     return acc

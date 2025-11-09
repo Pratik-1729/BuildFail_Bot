@@ -61,7 +61,7 @@ export default function Dashboard() {
   // ----------------------------------------------------------------------
   const handleRetrain = async () => {
     setRetrainLoading(true);
-    setRetrainStatus("🧠 Retraining model... please wait ⏳");
+    setRetrainStatus("Retraining model... please wait ⏳");
 
     try {
       const res = await fetch(API_ENDPOINTS.RETRAIN, {
@@ -78,11 +78,11 @@ export default function Dashboard() {
         const lastEntry = data.history[data.history.length - 1];
         if (lastEntry && lastEntry.status === "success") {
           clearInterval(interval);
-          setRetrainStatus("✅ Retraining completed successfully!");
+          setRetrainStatus("Retraining completed successfully!");
           setRetrainLoading(false);
         } else if (lastEntry && lastEntry.status === "failed") {
           clearInterval(interval);
-          setRetrainStatus("❌ Retraining failed. Check logs for details.");
+          setRetrainStatus("Retraining failed. Check logs for details.");
           setRetrainLoading(false);
         }
       }, 20000); // 20s polling interval
@@ -90,7 +90,7 @@ export default function Dashboard() {
       setPollInterval(interval);
     } catch (err) {
       console.error("Retrain error:", err);
-      setRetrainStatus("❌ Failed to start retraining");
+      setRetrainStatus("Failed to start retraining");
       setRetrainLoading(false);
     }
   };

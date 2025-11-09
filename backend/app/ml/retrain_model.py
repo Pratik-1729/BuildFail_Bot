@@ -42,7 +42,7 @@ def prepare_retrain_data():
         raise FileNotFoundError(f"Base dataset not found at {BASE_DATA_PATH}")
 
     base_df = pd.read_csv(BASE_DATA_PATH)
-    logger.info(f"📘 Loaded base dataset: {base_df.shape[0]} rows")
+    logger.info(f"Loaded base dataset: {base_df.shape[0]} rows")
 
     # Load ingested logs (optional)
     if not os.path.exists(INGESTED_PATH):
@@ -60,7 +60,7 @@ def prepare_retrain_data():
     # Handle both "log_excerpt" and "clean_log_excerpt" column names
     log_col = "clean_log_excerpt" if "clean_log_excerpt" in ingested_df.columns else "log_excerpt"
     if log_col not in ingested_df.columns:
-        logger.warning(f"⚠️ No log excerpt column found. Available columns: {list(ingested_df.columns)}")
+        logger.warning(f"No log excerpt column found. Available columns: {list(ingested_df.columns)}")
         return base_df
     
     required_cols = [log_col, "label"]

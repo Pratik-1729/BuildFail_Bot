@@ -15,7 +15,7 @@ METRICS_PATH = str(MODEL_METRICS_FILE)
 
 
 # ----------------------------------------------------------------------
-# 🔁 Background Retraining Task
+# Background Retraining Task
 # ----------------------------------------------------------------------
 def run_retrain_and_evaluate():
     """Retrain DistilBERT model using ingested logs + base dataset."""
@@ -27,13 +27,13 @@ def run_retrain_and_evaluate():
     }
 
     try:
-        logger.info("🚀 Initiating retraining pipeline...")
+        logger.info("Initiating retraining pipeline...")
         status["steps"].append("Retraining started")
 
         # Step 1 — Train model
         train_result = train_model()
         status["steps"].append("Training complete")
-        logger.info("✅ Model retraining finished successfully.")
+        logger.info("Model retraining finished successfully.")
 
         # Step 2 — Extract metrics from training result
         # train_result is now a dict with accuracy, f1_score, precision, recall
@@ -60,7 +60,7 @@ def run_retrain_and_evaluate():
             "active_model": active_model
         }
 
-        logger.info(f"📊 Evaluation results — Accuracy: {accuracy:.4f}, F1: {f1_score:.4f}")
+        logger.info(f"Evaluation results — Accuracy: {accuracy:.4f}, F1: {f1_score:.4f}")
         status["steps"].append("Evaluation metrics loaded")
 
         # Step 3 — Reload best model for inference
@@ -72,7 +72,7 @@ def run_retrain_and_evaluate():
             
             load_model_and_tokenizer()
             status["steps"].append("Model reloaded for live inference")
-            logger.info("♻️ Active model reloaded successfully after retraining.")
+            logger.info("Active model reloaded successfully after retraining.")
         except Exception as e:
             logger.warning(f"Could not reload model after retraining: {e}")
             status["steps"].append(f"Model reload warning: {str(e)}")
@@ -87,7 +87,7 @@ def run_retrain_and_evaluate():
         })
 
     except Exception as e:
-        logger.error("❌ Retraining pipeline failed:")
+        logger.error("Retraining pipeline failed:")
         logger.error(traceback.format_exc())
         status.update({
             "status": "failed",
@@ -109,11 +109,11 @@ def run_retrain_and_evaluate():
     with open(RETRAIN_LOG, "w") as f:
         json.dump(history, f, indent=4)
 
-    logger.info("📝 Retraining history updated.")
+    logger.info("Retraining history updated.")
 
 
 # ----------------------------------------------------------------------
-# ⚡ FastAPI Endpoint — Trigger Retraining
+#  FastAPI Endpoint — Trigger Retraining
 # ----------------------------------------------------------------------
 @router.post("/retrain")
 async def retrain_model(background_tasks: BackgroundTasks):
@@ -123,13 +123,13 @@ async def retrain_model(background_tasks: BackgroundTasks):
     """
     try:
         background_tasks.add_task(run_retrain_and_evaluate)
-        logger.info("🧠 Retraining job scheduled in background.")
+        logger.info("Retraining job scheduled in background.")
         return {
             "status": "accepted",
             "message": "Retraining initiated. It may take several minutes to complete.",
         }
     except Exception as e:
-        logger.error(f"❌ Failed to start retraining: {e}")
+        logger.error(f"Failed to start retraining: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
