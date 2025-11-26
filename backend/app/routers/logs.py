@@ -229,7 +229,7 @@ def process_build_log(payload: dict):
                 new_log_count = len(df)
                 # Trigger auto-retrain every 50 new logs
                 if new_log_count > 0 and new_log_count % 50 == 0:
-                    logger.info(f"🔄 {new_log_count} logs accumulated. Consider retraining model.")
+                    logger.info(f"{new_log_count} logs accumulated. Consider retraining model.")
         except Exception:
             pass  # Don't fail if auto-retrain check fails
 
